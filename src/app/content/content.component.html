@@ -1,0 +1,66 @@
+<div class="content-container">
+  <div class="content">
+    <h1 class="text-center">Extracted Data from PDF File</h1>
+    <div class="upload-container">
+      <p>Upload PDF File to Scan:</p>
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        placeholder="Upload file"
+      />
+      <div class="scan-btn-container">
+        <button class="btn btn-primary" (click)="uploadFile()">
+          Scan the File
+        </button>
+        <p class="upload-message" *ngIf="uploadProgressMessage">
+          {{ uploadProgressMessage }}
+        </p>
+        <div
+          class="progress-bar"
+          *ngIf="uploadMessage"
+          [class.success]="isUploadSuccessful"
+          [class.error]="!isUploadSuccessful"
+        >
+          {{ uploadMessage }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="search-container">
+    <div class="container-bar">
+      <input
+        type="text"
+        matInput
+        (keyup)="searchData(filter.value)"
+        placeholder="Search..."
+        type="text"
+        #filter
+      />
+      <div class="search"></div>
+    </div>
+  </div>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th class="control-id-col">Control Id</th>
+          <th class="control-name-col">Control Name</th>
+          <th class="document-name-col">Document Name</th>
+          <th class="page-number-col">Page Number</th>
+          <th class="keywords-col">Keywords</th>
+          <th class="evidence-col">Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredData">
+          <td class="control-id-col">{{ item.controlId }}</td>
+          <td class="control-name-col">{{ item.controlName }}</td>
+          <td class="document-name-col">{{ item.documentName }}</td>
+          <td class="page-number-col">{{ item.pageNumber }}</td>
+          <td class="keywords-col">{{ item.keywords }}</td>
+          <td class="evidence-col">{{ item.evidence }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

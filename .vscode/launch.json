@@ -15,6 +15,13 @@
       "request": "launch",
       "preLaunchTask": "npm: test",
       "url": "http://localhost:9876/debug.html"
+    },
+    {
+      "name": "Launch Java App",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "com.example.Main",
+      "vmArgs": "--enable-preview"
     }
   ]
 }
