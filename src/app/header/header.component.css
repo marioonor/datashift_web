@@ -2,10 +2,21 @@
     background-color: #333;
     color: white;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 h1 {
     font-size: 20px;
     padding: 20px;
     margin: 0;
+    width: 100%;
 }
+
+a {
+    cursor: pointer;
+    padding: 0 20px 0 0;
+}
+

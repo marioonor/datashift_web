@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: linear-gradient(to bottom right, #3c3c3c, #969696, #cfcfcf);
+}
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+}
+
+.cntr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+input {
+    height: 30px;
+    font-size: 14px;
+}
+
+.btn {
+    height: 35px;
+    font-size: 14px;
+    width: 100%;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+}
+

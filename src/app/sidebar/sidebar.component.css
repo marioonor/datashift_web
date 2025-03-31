@@ -11,6 +11,10 @@ p {
   transition: 0.3s;
 }
 
+select {
+  height: 30px;
+}
+
 .success {
   color: rgb(61, 165, 35);
   margin-top: 10px;

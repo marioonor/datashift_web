@@ -1,0 +1,43 @@
+<div class="container">
+  <form class="frm login-form" [formGroup]="data" (ngSubmit)="onSubmit()">
+    <div class="login-container">
+      <h1>DataShift</h1>
+      <br />
+      <br />
+      <div class="cntr email-container">
+        <label>Email:</label>
+        <input
+          class="text"
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          formControlName="userId"
+        />
+      </div>
+      <br />
+      <div class="cntr password-container">
+        <label>Password:</label>
+        <input
+          class="text"
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+      </div>
+      <br />
+      <button class="btn login-btn">Login</button>
+      <br />
+      <br />
+    </div>
+  </form>
+  <form class="frm register-form" [formGroup]="data" (ngSubmit)="onRegister()">
+    <div class="cntr register-container">
+      <p>Not yet registered</p>
+      <button class="btn register-btn">Register here</button>
+      <br />
+      <br />
+      <br />
+    </div>
+  </form>
+</div>
