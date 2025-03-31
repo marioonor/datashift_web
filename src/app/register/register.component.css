@@ -1,40 +1,82 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-image: linear-gradient(to bottom right, #3c3c3c, #969696, #cfcfcf);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 50%;
+  background-image: linear-gradient(to bottom right, #59b000, #01b000, #00b057);
 }
 
-.register-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 300px;
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.cntr {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
+.frm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-input {
-    height: 30px;
-    font-size: 14px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.txtlabel {
+  width: 250px;
+  height: 30px;
+}
+
+label {
+  text-align: left;
+  width: 100%;
+  color: white;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  font-size: 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 0 10px;
+  width: 260px;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  transition: 0.4s;
+}
+
+.reg {
+  color: #0001b0;
+  background-color: rgba(104, 85, 224, 1);
 }
 
 .btn {
-    height: 35px;
-    font-size: 14px;
-    width: 100%;
-    cursor: pointer;
+  color: rgb(104, 85, 224);
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(104, 85, 224, 1);
 }
 
-h1 {
-    text-align: center;
+button:hover {
+  color: white;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
+  background-color: #0059b0;
 }
 
+h1,
+h2,
+p {
+  color: white;
+}
+
+a {
+  cursor: pointer;
+  color: #0059b0;
+}

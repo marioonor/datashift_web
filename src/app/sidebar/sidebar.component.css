@@ -25,17 +25,6 @@ select {
   margin-top: 10px;
 }
 
-.btn {
-  background-color: rgb(61, 165, 35);
-  color: white;
-  padding: 10px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
 .btn:hover {
   opacity: 1;
 }
@@ -67,4 +56,33 @@ select {
 
 select {
   width: 300px;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  font-size: 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  transition: 0.4s;
+}
+
+.reg {
+  color: #0001b0;
+  background-color: rgba(104, 85, 224, 1);
+}
+
+.btn {
+  color: rgb(104, 85, 224);
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(104, 85, 224, 1);
+}
+
+button:hover {
+  color: white;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
+  background-color: #0059b0;
 }

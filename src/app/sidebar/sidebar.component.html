@@ -39,7 +39,7 @@
     type="file"
     (change)="onFileChange($event)"
     placeholder="Upload file"
-  />
+  /><br/><br/>
   <button class="btn btn-primary" (click)="uploadFile()">Upload!</button>
   <p *ngIf="uploadProgressMessage">{{ uploadProgressMessage }}</p>
   <div

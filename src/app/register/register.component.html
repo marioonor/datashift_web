@@ -1,41 +1,22 @@
 <div class="container">
-  <form>
-    <h1>DataShift</h1>
-    <div class="register-container">
-      <div class="cntr name-container">
-        <label>Name:</label>
-        <input
-          class="text"
-          type="text"
-          id="username"
-          placeholder="Enter your name"
-          formControlName="username"
-        />
-      </div>
-      <br />
-      <div class="cntr email-container">
-        <label>Email:</label>
-        <input
-          class="text"
-          type="email"
-          id="email"
-          placeholder="Enter your email"
-          formControlName="userId"
-        />
-      </div>
-      <br />
-      <div class="cntr password-container">
-        <label>Password:</label>
-        <input
-          class="text"
-          type="password"
-          id="password"
-          placeholder="Enter your password"
-          formControlName="password"
-        />
-      </div>
-      <br />
-      <button class="btn register-btn">Register</button>
-    </div>
-  </form>
+  <div class="register-form">
+    <h1>DataShift</h1><br><br>
+    <h2>Register</h2>
+    <form class="frm" [formGroup]="register" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="txtlabel" for="userId">User Name:</label>
+        <input class="txtlabel" type="text" id="username" formControlName="username" required />
+      </div><br>
+      <div class="form-group">
+        <label class="txtlabel" for="userId">User ID:</label>
+        <input class="txtlabel" type="text" id="email" formControlName="email" required />
+      </div><br>
+      <div class="form-group">
+        <label class="txtlabel" for="password">Password:</label>
+        <input class="txtlabel" type="password" id="password" formControlName="password" required />
+      </div><br><br>
+      <button class="btn" type="submit" class="btn">Register</button><br>
+      <a (click)="onLogin()"><< Back</a>
+    </form>
+  </div>
 </div>
