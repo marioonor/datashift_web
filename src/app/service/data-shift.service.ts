@@ -7,7 +7,7 @@ import { DataShift } from '../model/data-shift.model';
   providedIn: 'root'
 })
 export class DataShiftService {
-  private apiUrl = 'http://localhost:8085/api/data-shift/all'; // Replace with your API endpoint
+  private apiUrl = 'http://localhost:8085/api/data-shift/all';
 
   constructor(private http: HttpClient) { }
 
