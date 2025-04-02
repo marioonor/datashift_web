@@ -4,13 +4,10 @@ import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
-import { DataShiftService } from '../service/data-shift.service';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { ExtractedData } from '../extractedData'; // Import the interface
-import { MatDialog } from '@angular/material/dialog';
+import { ExtractedData } from '../model/extractedData';
 
 @Component({
   selector: 'app-content',
@@ -29,15 +26,13 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ContentComponent implements OnInit {
   data: ExtractedData[] = [];
-  filteredData: ExtractedData[] = []; // Array to hold the filtered data
+  filteredData: ExtractedData[] = [];
   selectedFile: File | null = null;
   uploadMessage: string = '';
   isUploadSuccessful: boolean = false;
   uploadProgressMessage: string = '';
 
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadExtractedData();
@@ -50,7 +45,7 @@ export class ContentComponent implements OnInit {
         next: (data) => {
           console.log('Data received:', data);
           this.data = data;
-          this.filteredData = data; // Initialize filteredData with all data
+          this.filteredData = data;
           console.log('dataSource.data:', this.data);
         },
         error: (error) => {
@@ -127,7 +122,7 @@ export class ContentComponent implements OnInit {
     const searchTerm = input.trim().toLowerCase();
 
     if (!searchTerm) {
-      this.filteredData = [...this.data]; // Show all data if the search term is empty
+      this.filteredData = [...this.data];
     } else {
       this.filteredData = this.data.filter((item) => {
         return (

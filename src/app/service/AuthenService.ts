@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, isDevMode } from "@angular/core";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -10,17 +10,35 @@ export class AuthenService {
     private isLoggedIn = false;
 
     constructor(private router: Router) {
-        this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (typeof window !== 'undefined' && window.localStorage) {
+            this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        } else {
+            if (isDevMode()) {
+                console.warn('Local Storage is not available');
+            }
+        }
     }
 
     Login() {
         this.isLoggedIn = true;
-        localStorage.setItem('isLoggedIn', 'true');
+        if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem('isLoggedIn', 'true');
+        } else {
+            if (isDevMode()) {
+                console.warn('Local Storage is not available');
+            }
+        }
     }
 
     Logout() {
         this.isLoggedIn = false;
-        localStorage.removeItem('isLoggedIn');
+        if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.removeItem('isLoggedIn');
+        } else {
+            if (isDevMode()) {
+                console.warn('Local Storage is not available');
+            }
+        }
         this.router.navigate(['/login']);
     }
 

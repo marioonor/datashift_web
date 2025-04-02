@@ -25,10 +25,10 @@ export class SidebarComponent implements OnInit {
   uploadMessage: string = '';
   isUploadSuccessful: boolean = false;
   uploadProgressMessage: string = '';
-  controlKeywords: ControlKeywordsDTO[] = []; // Store the fetched data here
-  isLoading: boolean = false; // Add a loading state
-  controlIdentifiers: ControlIdentifierDTO[] = []; // Store the control identifiers
-  selectedControlIdentifier: string = ''; // Store the selected control identifier
+  controlKeywords: ControlKeywordsDTO[] = []; 
+  isLoading: boolean = false; 
+  controlIdentifiers: ControlIdentifierDTO[] = []; 
+  selectedControlIdentifier: string = ''; 
 
   constructor(private http: HttpClient) {}
 
