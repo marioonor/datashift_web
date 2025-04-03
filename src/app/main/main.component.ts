@@ -8,9 +8,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MainData } from '../model/mainData';
 import { HttpClient } from '@angular/common/http';
+import { Router, RouterModule } from '@angular/router'; // Import Router and RouterModule
 
 @Component({
   selector: 'app-main',
+  standalone: true, // Add standalone: true
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -19,6 +21,7 @@ import { HttpClient } from '@angular/common/http';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    RouterModule, // Add RouterModule
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
@@ -29,7 +32,7 @@ export class MainComponent implements OnInit {
   isLoading = true;
   errorMessage: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {} // Inject Router
 
   ngOnInit(): void {
     this.loadMainData();
@@ -51,5 +54,9 @@ export class MainComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/home']); // Navigate to /home
   }
 }

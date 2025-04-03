@@ -1,6 +1,6 @@
 <div *ngIf="isLoading">Loading...</div>
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-
+<button (click)="navigateToHome()">Go to Upload a File</button>
 <table *ngIf="!isLoading && !errorMessage">
   <thead>
     <tr>

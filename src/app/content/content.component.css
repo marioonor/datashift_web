@@ -36,7 +36,7 @@
 .search-container {
   position: sticky;
   top: 0;
-  width: 100%;
+  width: 50%;
 }
 
 table {
@@ -124,6 +124,7 @@ body {
 
 .text-center {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 input {

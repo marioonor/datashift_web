@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { ExtractedData } from '../model/extractedData';
+import { ExtractedData } from '../model/extractedData'; // Import the interface
 
 @Component({
   selector: 'app-content',
@@ -26,13 +26,15 @@ import { ExtractedData } from '../model/extractedData';
 })
 export class ContentComponent implements OnInit {
   data: ExtractedData[] = [];
-  filteredData: ExtractedData[] = [];
+  filteredData: ExtractedData[] = []; // Array to hold the filtered data
   selectedFile: File | null = null;
   uploadMessage: string = '';
   isUploadSuccessful: boolean = false;
   uploadProgressMessage: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+  ) {}
 
   ngOnInit(): void {
     this.loadExtractedData();
@@ -45,7 +47,7 @@ export class ContentComponent implements OnInit {
         next: (data) => {
           console.log('Data received:', data);
           this.data = data;
-          this.filteredData = data;
+          this.filteredData = data; 
           console.log('dataSource.data:', this.data);
         },
         error: (error) => {
@@ -74,40 +76,41 @@ export class ContentComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
 
+    // First, upload to /api/data-shift/upload
     this.http
-      .post('http://localhost:8085/data/pdf', formData, {
-        reportProgress: true,
-        observe: 'events',
-      })
+      .post<any>('http://localhost:8085/api/data-shift/upload', formData)
       .subscribe({
-        next: (event) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            if (event.total) {
-              const percentDone = Math.round(
-                (100 * event.loaded) / event.total
-              );
-              this.uploadProgressMessage = `File is ${percentDone}% uploaded.`;
-              console.log(`File is ${percentDone}% uploaded.`);
-            }
-            this.clearUploadMessageAfterDelay();
-          } else if (event instanceof HttpResponse) {
-            this.uploadMessage = 'File uploaded successfully!';
-            this.isUploadSuccessful = true;
-            this.uploadProgressMessage = '';
-            console.log('File is completely uploaded!');
-            console.log('Response:', event.body);
-            this.loadExtractedData();
-          }
+        next: (uploadResponse) => {
+          console.log('File uploaded successfully:', uploadResponse);
+          const documentName = uploadResponse.documentName; // Get the documentName from the documentName field
+
+          // Then, send the documentName to /data/pdf
+          const params = new HttpParams().set('documentName', documentName);
+          this.http
+            .post<any>('http://localhost:8085/data/pdf', null, { params })
+            .subscribe({
+              next: (extractResponse) => {
+                this.uploadMessage = 'Data extracted successfully!';
+                this.isUploadSuccessful = true;
+                this.uploadProgressMessage = '';
+                console.log('Data extracted successfully:', extractResponse);
+                this.loadExtractedData();
+              },
+              error: (extractError) => {
+                this.uploadMessage = 'Data extraction error.';
+                this.clearUploadMessageAfterDelay();
+                this.isUploadSuccessful = false;
+                this.uploadProgressMessage = '';
+                console.error('Data extraction error:', extractError);
+              },
+            });
         },
-        error: (err) => {
-          this.uploadMessage = 'Upload failed.';
+        error: (uploadError) => {
+          this.uploadMessage = 'File upload error.';
           this.clearUploadMessageAfterDelay();
           this.isUploadSuccessful = false;
           this.uploadProgressMessage = '';
-          console.error('Upload Error:', err);
-        },
-        complete: () => {
-          console.log('Upload completed.');
+          console.error('File upload error:', uploadError);
         },
       });
   }
@@ -122,7 +125,7 @@ export class ContentComponent implements OnInit {
     const searchTerm = input.trim().toLowerCase();
 
     if (!searchTerm) {
-      this.filteredData = [...this.data];
+      this.filteredData = [...this.data]; 
     } else {
       this.filteredData = this.data.filter((item) => {
         return (
