@@ -28,7 +28,7 @@ export class LoginComponent {
         console.log(response);
         if (response) {
           this.authService.Login();
-          this.router.navigate(['/main']);
+          this.router.navigate(['/home']);
         } else { 
           alert("Wrong credential!");
         }

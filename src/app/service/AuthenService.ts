@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from "@angular/core";
+import { Injectable, isDevMode, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -6,10 +6,11 @@ import { Router } from "@angular/router";
 })
 export class AuthenService {
     private isLoggedIn = false;
+    public logoutEvent: EventEmitter<void> = new EventEmitter<void>();
+    redirectUrl: string | null = null;
 
     constructor(private router: Router) {
         if (typeof window !== 'undefined' && window.localStorage) {
-            // Check if 'isLoggedIn' is in localStorage and update isLoggedIn accordingly
             const storedLoginStatus = localStorage.getItem('isLoggedIn');
             this.isLoggedIn = storedLoginStatus === 'true';
         } else {
@@ -34,12 +35,17 @@ export class AuthenService {
         this.isLoggedIn = false;
         if (typeof window !== 'undefined' && window.localStorage) {
             localStorage.removeItem('isLoggedIn');
+            // Clear other user-related data from local storage if needed
         } else {
             if (isDevMode()) {
                 console.warn('Local Storage is not available');
             }
         }
-        this.router.navigate(['/login']);
+        this.logoutEvent.emit(); 
+        this.router.navigate(['/login']).then(() => {
+            // Clear cache more aggressively
+            window.location.replace('/login');
+        });
     }
 
     isUserLoggedIn(): boolean {

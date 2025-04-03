@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MainData } from '../model/mainData';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router'; // Import Router and RouterModule
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-main',
@@ -21,7 +22,8 @@ import { Router, RouterModule } from '@angular/router'; // Import Router and Rou
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    RouterModule, // Add RouterModule
+    RouterModule,
+    HeaderComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',

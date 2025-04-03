@@ -1,2 +1,33 @@
-
-
+<app-header></app-header>
+<div class="content">
+  <button (click)="navigateToMain()">Final Result</button>
+  <button (click)="navigateToExtractedData()">Extracted Data</button>
+  <div class="upload-container">
+    <p>Upload PDF File to Scan:</p>
+    <input
+      type="file"
+      (change)="onFileChange($event)"
+      placeholder="Upload file"
+    />
+    <div class="scan-btn-container">
+      <button class="btn btn-primary" (click)="uploadFile()">
+        Scan the File
+      </button>
+      <p class="upload-message" *ngIf="uploadProgressMessage">
+        {{ uploadProgressMessage }}
+      </p>
+      <div
+        class="progress-bar"
+        *ngIf="uploadMessage"
+        [class.success]="isUploadSuccessful"
+        [class.error]="!isUploadSuccessful"
+      >
+        {{ uploadMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="uploads">
+  <app-sidebar></app-sidebar>
+  <app-manualupload></app-manualupload>
+</div>

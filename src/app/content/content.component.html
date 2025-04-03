@@ -1,31 +1,6 @@
+<app-header></app-header>
 <div class="content-container">
-  <div class="content">
-    
-    <div class="upload-container">
-      <p>Upload PDF File to Scan:</p>
-      <input
-        type="file"
-        (change)="onFileChange($event)"
-        placeholder="Upload file"
-      />
-      <div class="scan-btn-container">
-        <button class="btn btn-primary" (click)="uploadFile()">
-          Scan the File
-        </button>
-        <p class="upload-message" *ngIf="uploadProgressMessage">
-          {{ uploadProgressMessage }}
-        </p>
-        <div
-          class="progress-bar"
-          *ngIf="uploadMessage"
-          [class.success]="isUploadSuccessful"
-          [class.error]="!isUploadSuccessful"
-        >
-          {{ uploadMessage }}
-        </div>
-      </div>
-    </div>
-  </div>
+  <button (click)="navigateToHome()">Home</button>
   <h1 class="text-center">Extracted Data from PDF File</h1>
   <div class="search-container">
     <div class="container-bar">
@@ -37,7 +12,6 @@
         type="text"
         #filter
       />
-      <div class="search"></div>
     </div>
   </div>
   <div class="table-container">
