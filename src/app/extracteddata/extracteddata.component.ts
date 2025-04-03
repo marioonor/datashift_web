@@ -14,8 +14,8 @@ import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrl: './content.component.css',
+  templateUrl: './extracteddata.component.html',
+  styleUrl: './extracteddata.component.css',
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -94,6 +94,10 @@ export class ContentComponent implements OnInit {
   }
 
   navigateToHome() {
-    this.router.navigate(['/home']); // Navigate to /home
+    this.router.navigate(['/home']); 
+  }
+
+  navigateToMain() {
+    this.router.navigate(['/result']);
   }
 }

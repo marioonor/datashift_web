@@ -1,16 +1,18 @@
 <app-header></app-header>
 <div *ngIf="isLoading">Loading...</div>
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-<button (click)="navigateToHome()">Home</button>
+<button class="btn" (click)="navigateToHome()">Home</button>
+<button (click)="navigateToExtractedData()">Extracted Data</button>
+<h1 class="text-center">Results</h1>
 <table *ngIf="!isLoading && !errorMessage">
   <thead>
     <tr>
-      <th class="control-id-col">Control Id</th>
-      <th class="control-name-col">Control Name</th>
-      <th class="control-name-col">Control Description</th>
-      <th class="evidence-col">Evidence</th>
-      <th class="remarks-col">Remarks</th>
-      <th class="status-col">Status</th>
+      <th class="table-header control-id-col">Control Id</th>
+      <th class="table-header control-name-col">Control Name</th>
+      <th class="table-header control-name-col">Control Description</th>
+      <th class="table-header evidence-col">Evidence</th>
+      <th class="table-header remarks-col">Remarks</th>
+      <th class="table-header status-col">Status</th>
     </tr>
   </thead>
   <tbody>

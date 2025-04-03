@@ -25,10 +25,10 @@ import { HeaderComponent } from '../header/header.component';
     RouterModule,
     HeaderComponent,
   ],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.css',
+  templateUrl: './result.component.html',
+  styleUrl: './result.component.css',
 })
-export class MainComponent implements OnInit {
+export class ResultComponent implements OnInit {
   mainData: MainData[] = []; // Store the data here
   filteredData: MainData[] = []; // Data to display in the table
   isLoading = true;
@@ -52,7 +52,8 @@ export class MainComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching the main data:', error);
-        this.errorMessage = 'Failed to load data. Please check the console for details.';
+        this.errorMessage =
+          'Failed to load data. Please check the console for details.';
         this.isLoading = false;
       },
     });
@@ -60,5 +61,9 @@ export class MainComponent implements OnInit {
 
   navigateToHome() {
     this.router.navigate(['/home']); // Navigate to /home
+  }
+
+  navigateToExtractedData() {
+    this.router.navigate(['/extracted-data']);
   }
 }

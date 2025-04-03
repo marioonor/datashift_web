@@ -1,6 +1,7 @@
 <app-header></app-header>
 <div class="content-container">
-  <button (click)="navigateToHome()">Home</button>
+  <button class="btn" (click)="navigateToHome()">Home</button>
+  <button (click)="navigateToMain()">Result</button>
   <h1 class="text-center">Extracted Data from PDF File</h1>
   <div class="search-container">
     <div class="container-bar">
@@ -18,12 +19,12 @@
     <table>
       <thead>
         <tr>
-          <th class="control-id-col">Control Id</th>
-          <th class="control-name-col">Control Name</th>
-          <th class="document-name-col">Document Name</th>
-          <th class="page-number-col">Page Number</th>
-          <th class="keywords-col">Keywords</th>
-          <th class="evidence-col">Evidence</th>
+          <th class="table-header control-id-col">Control Id</th>
+          <th class="table-header control-name-col">Control Name</th>
+          <th class="table-header document-name-col">Document Name</th>
+          <th class="table-header page-number-col">Page Number</th>
+          <th class="table-header keywords-col">Keywords</th>
+          <th class="table-header evidence-col">Evidence</th>
         </tr>
       </thead>
       <tbody>

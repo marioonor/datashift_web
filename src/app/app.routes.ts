@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ContentComponent } from './content/content.component';
-import { LoginComponent } from './login/login.component'; // Assuming you have a LoginComponent
+import { ContentComponent } from './extracteddata/extracteddata.component';
+import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { MainComponent } from './main/main.component';
+import { ResultComponent } from './result/result.component';
 import { RegisterComponent } from './register/register.component';
 
-export const routes: Routes = [ // Export the routes array
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
+export const routes: Routes = [ 
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'main', component: MainComponent },
-  { path: 'content', component: ContentComponent }, // Correct route for ContentComponent
+  { path: 'result', component: ResultComponent },
+  { path: 'extracted-data', component: ContentComponent }, 
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }, // Route for LoginComponent
-  { path: '**', redirectTo: '/login' }, // Wildcard route (should be last)
+  { path: 'register', component: RegisterComponent }, 
+  { path: '**', redirectTo: '/login' }, 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)], // Use the routes array here
+  imports: [RouterModule.forRoot(routes)], 
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

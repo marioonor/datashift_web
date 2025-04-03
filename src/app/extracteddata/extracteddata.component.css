@@ -102,8 +102,8 @@ thead {
   border-top: 0;
 }
 
-th {
-  background-color: rgb(68, 185, 39);
+.table-header {
+  background-color: #0093b0;
   color: white;
 }
 
@@ -116,16 +116,13 @@ button {
   cursor: pointer;
   border: 0;
   font-size: 16px;
-  border-radius: 4px;
   font-weight: 600;
-  margin: 20px;
-  width: 150px;
-  padding: 10px 0;
+  width: 200px;
+  padding: 10px;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
   transition: 0.4s;
   color: rgb(104, 85, 224);
   background-color: rgba(255, 255, 255, 1);
-  border: 1px solid rgba(104, 85, 224, 1);
 }
 
 button:hover {
@@ -144,4 +141,8 @@ button:hover {
   top: 60px;
   width: 45%;
   z-index: 1;
+}
+
+.btn {
+  margin: 10px 0 10px 10px;
 }
