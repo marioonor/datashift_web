@@ -20,7 +20,14 @@
       <td class="control-id-col">{{ item.controlId }}</td>
       <td class="control-name-col">{{ item.controlName }}</td>
       <td class="control-description-col">{{ item.controlDescription }}</td>
-      <td class="evidence-col">{{ item.evidence }}</td>
+      <td class="evidence-col" (click)="openEvidenceModal(item)" style="cursor: pointer;">
+        <div *ngIf="item.groupedData">
+          Grouped Data Available
+        </div>
+        <div *ngIf="!item.groupedData">
+          {{ item.evidence }}
+        </div>
+      </td>
       <td class="remarks-col">{{ item.remarks }}</td>
       <td class="status-col">{{ item.status }}</td>
     </tr>

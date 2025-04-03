@@ -5,7 +5,7 @@
   justify-content: center;
   height: 100vh;
   width: 50%;
-  background-image: linear-gradient(to bottom right, #59b000, #01b000, #00b057);
+  background-image: linear-gradient(to bottom right, #0026b0, #0064b0, #0093b0);
 }
 
 .login-form {
@@ -78,5 +78,5 @@ p {
 
 a {
   cursor: pointer;
-  color: #0059b0;
+  color: #00b03e;
 }

@@ -15,13 +15,6 @@
     width: 100%;
     
   }
-
-  .text-center {
-    text-align: center;
-    font-size: 30px;
-    max-width: 100%;
-    width: 95%;
-  }
   
   a {
     cursor: pointer;

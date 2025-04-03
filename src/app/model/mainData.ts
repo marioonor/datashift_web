@@ -1,4 +1,5 @@
 export interface MainData {
+  groupedData: any;
   id: number;
   controlId: string;
   controlName: string;
