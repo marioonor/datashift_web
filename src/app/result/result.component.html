@@ -22,7 +22,7 @@
       <td class="control-description-col">{{ item.controlDescription }}</td>
       <td class="evidence-col" (click)="openEvidenceModal(item)" style="cursor: pointer;">
         <div *ngIf="item.groupedData">
-          Grouped Data Available
+          {{ item.evidence }}
         </div>
         <div *ngIf="!item.groupedData">
           {{ item.evidence }}

@@ -8,7 +8,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
-import { MainData } from '../result/result.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -23,7 +22,15 @@ interface GroupedData {
   pageKeywords: PageKeyword[];
 }
 
+// Define the interface for the modal data
+interface ModalData {
+  controlId: string;
+  documentName: string;
+  pageNumber: string;
+}
+
 interface DialogData {
+  modalData: ModalData;
   groupedData: GroupedData;
 }
 
@@ -45,18 +52,21 @@ interface DialogData {
   styleUrl: './groupeddatamodalcomponent.component.css',
 })
 export class GroupeddatamodalcomponentComponent implements OnInit {
-  groupedData: GroupedData[] = []; // Store the grouped data here
+  groupedData: GroupedData | null = null;
+  modalData: ModalData | null = null;
   errorMessage: string | null = null;
+  groupedDatas: GroupedData[] = [];
   dialog: any;
-isLoading: any;
+  isLoading: any;
 
-  constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData, private http: HttpClient, private router: Router) {    
-      if (data && data.groupedData) {
-        this.groupedData = [data.groupedData];
-      }
+  constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData, private http: HttpClient, private router: Router) {
+    if (data) {
+      this.groupedData = data.groupedData;
+      this.modalData = data.modalData;
+    }
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
   }
 
   navigateToHome() {

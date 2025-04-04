@@ -1,36 +1,20 @@
-
-<div class="modal-container">
-  <div class="modal-header">
-    <h2>Grouped Data</h2>
-    <button mat-button mat-dialog-close class="close-button">Close</button>
+<div class="container">
+  <div *ngIf="modalData">
+    <h2>Extracted Data</h2>
+    <p><strong>Control ID:</strong> {{ modalData.controlId }}</p>
+    <p><strong>Document Name:</strong> {{ modalData.documentName }}</p>
   </div>
-  <div class="modal-body">
-    <div *ngIf="isLoading">Loading...</div>
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div> 
-    <table mat-table [dataSource]="groupedData" class="mat-elevation-z8" *ngIf="!isLoading && !errorMessage">
-      <!-- Define your table columns here -->
-      <ng-container matColumnDef="documentName">
-        <th mat-header-cell *matHeaderCellDef>Document Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.documentName }}</td>
-      </ng-container>
 
-      <ng-container matColumnDef="pageKeywords">
-        <th mat-header-cell *matHeaderCellDef>Page Keywords</th>
-        <td mat-cell *matCellDef="let element">
-          <div *ngFor="let pageKeyword of element.pageKeywords">
-            <div>
-              <strong>Pages:</strong> {{ pageKeyword.pages.join(', ') }}
-            </div>
-            <div>
-              <strong>Keyword:</strong> {{ pageKeyword.keyword }}
-            </div>
-            <hr />
-          </div>
-        </td>
-      </ng-container>
+  <div *ngIf="groupedData">
+    <div *ngFor="let pageKeyword of groupedData.pageKeywords">
+      <h4>Keyword: {{ pageKeyword.keyword }}</h4>
+      <ul>
+        <li *ngFor="let page of pageKeyword.pages">Page: {{ page }}</li>
+      </ul>
+    </div>
+  </div>
 
-      <tr mat-header-row *matHeaderRowDef="['documentName', 'pageKeywords']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['documentName', 'pageKeywords']"></tr>
-    </table>
+  <div *ngIf="!modalData && !groupedData">
+    <p>No data available.</p>
   </div>
 </div>
