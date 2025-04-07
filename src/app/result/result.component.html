@@ -3,6 +3,7 @@
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 <button class="btn" (click)="navigateToHome()">Home</button>
 <button (click)="navigateToExtractedData()">Extracted Data</button>
+<button (click)="navigateToViewPdf()">View PDF</button>
 <h1 class="text-center">Results</h1>
 <table *ngIf="!isLoading && !errorMessage">
   <thead>

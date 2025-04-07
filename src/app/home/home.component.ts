@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { ManualuploadComponent } from '../manualupload/manualupload.component';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +12,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ExtractedData } from '../model/extractedData';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthenService } from '../service/AuthenService';
-import { ContentComponent } from '../extracteddata/extracteddata.component';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +20,6 @@ import { ContentComponent } from '../extracteddata/extracteddata.component';
   standalone: true,
   imports: [
     SidebarComponent,
-    ManualuploadComponent,
     CommonModule,
     MatFormFieldModule,
     MatInputModule,

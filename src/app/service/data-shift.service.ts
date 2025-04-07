@@ -18,4 +18,5 @@ export class DataShiftService {
   fetchAllData(): Observable<DataShift[]> {
     return this.http.get<DataShift[]>(this.apiUrl);
   }
+
 }

@@ -5,12 +5,14 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ResultComponent } from './result/result.component';
 import { RegisterComponent } from './register/register.component';
+import { ViewPdfComponent } from './viewpdf/viewpdf.component';
 
 export const routes: Routes = [ 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'result', component: ResultComponent },
   { path: 'extracted-data', component: ContentComponent }, 
+  { path: 'view-pdf', component: ViewPdfComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent }, 
   { path: '**', redirectTo: '/login' }, 

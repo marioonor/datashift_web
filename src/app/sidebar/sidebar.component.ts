@@ -20,6 +20,7 @@ interface ControlIdentifierDTO {
   imports: [CommonModule],
   standalone: true,
 })
+
 export class SidebarComponent implements OnInit {
   selectedFile: File | null = null;
   uploadMessage: string = '';

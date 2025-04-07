@@ -88,7 +88,6 @@ export class ResultComponent implements OnInit {
     this.loadGroupedData();
   }
 
-
   loadMainData() {
     this.isLoading = true;
     this.errorMessage = null;
@@ -96,7 +95,7 @@ export class ResultComponent implements OnInit {
       next: (data) => {
         console.log('Main data received:', data);
         // Add this line to inspect the data
-        data.forEach(item => console.log("Main Data Item:", item));
+        data.forEach((item) => console.log('Main Data Item:', item));
         this.mainData = data;
         this.filteredData = [...this.mainData];
         this.isLoading = false;
@@ -109,45 +108,44 @@ export class ResultComponent implements OnInit {
       },
     });
   }
-  
 
   loadGroupedData() {
-    this.http.get<GroupedData[]>('http://localhost:8085/main-data/grouped').subscribe({
-      next: (groupedData) => {
-        console.log('Grouped data received:', groupedData);
-        // Map grouped data to main data
-        this.filteredData.forEach((item) => {
-          // Find the group that matches the item's documentName
-          const matchingGroup = groupedData.find(
-            (group) => group.documentName.replace(/^\d+\.\s/, '') === item.documentName
-          );
-
-          if (matchingGroup) {
-            // Filter pageKeywords based on the controlId
-            const filteredPageKeywords = matchingGroup.pageKeywords.filter(
-              (pageKeyword) => pageKeyword.controlIds.includes(item.controlId) // Check if the controlIds array contains the current item's controlId
+    this.http
+      .get<GroupedData[]>('http://localhost:8085/main-data/grouped')
+      .subscribe({
+        next: (groupedData) => {
+          console.log('Grouped data received:', groupedData);
+          // Map grouped data to main data
+          this.filteredData.forEach((item) => {
+            // Find the group that matches the item's documentName
+            const matchingGroup = groupedData.find(
+              (group) =>
+                group.documentName.replace(/^\d+\.\s/, '') === item.documentName
             );
 
-            // Create a new GroupedData object with only the filtered pageKeywords
-            item.groupedData = {
-              documentName: matchingGroup.documentName,
-              pageKeywords: filteredPageKeywords,
-            };
-          } else {
-            item.groupedData = undefined;
-          }
-          // Add these lines to check the matching
-          console.log("Matching group: ", matchingGroup);
-        });
-      },
-      error: (error) => {
-        console.error('Error fetching grouped data:', error);
-      },
-    });
+            if (matchingGroup) {
+              // Filter pageKeywords based on the controlId
+              const filteredPageKeywords = matchingGroup.pageKeywords.filter(
+                (pageKeyword) => pageKeyword.controlIds.includes(item.controlId) // Check if the controlIds array contains the current item's controlId
+              );
+
+              // Create a new GroupedData object with only the filtered pageKeywords
+              item.groupedData = {
+                documentName: matchingGroup.documentName,
+                pageKeywords: filteredPageKeywords,
+              };
+            } else {
+              item.groupedData = undefined;
+            }
+            // Add these lines to check the matching
+            console.log('Matching group: ', matchingGroup);
+          });
+        },
+        error: (error) => {
+          console.error('Error fetching grouped data:', error);
+        },
+      });
   }
-
-
-  
 
   openEvidenceModal(item: MainData) {
     // Prepare the modal data
@@ -158,7 +156,7 @@ export class ResultComponent implements OnInit {
     };
     console.log('Modal Data to be passed:', modalData);
     console.log('Grouped Data to be passed:', item.groupedData);
-  
+
     // Open the modal and pass the modal data
     this.dialog.open(GroupeddatamodalcomponentComponent, {
       data: { modalData, groupedData: item.groupedData }, // Pass both modalData and groupedData
@@ -166,7 +164,6 @@ export class ResultComponent implements OnInit {
       height: '400px',
     });
   }
-  
 
   navigateToHome() {
     this.router.navigate(['/home']);
@@ -175,5 +172,8 @@ export class ResultComponent implements OnInit {
   navigateToExtractedData() {
     this.router.navigate(['/extracted-data']);
   }
-  
+
+  navigateToViewPdf() {
+    this.router.navigate(['/view-pdf']);
+  }
 }

@@ -1,0 +1,11 @@
+select {
+    width: 30%;
+    padding: 8px;
+    margin: 4px 0;
+    box-sizing: border-box;
+}
+
+.keyword-item {
+    cursor: pointer;
+}
+
