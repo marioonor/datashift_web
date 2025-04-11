@@ -1,30 +1,45 @@
-<h2>Select an Item:</h2>
-<select
-  (change)="onSelectionChange($event)"
-  [(ngModel)]="selectedControlIdentifier"
->
-  <option controlId="" enabled selected>Select Controls</option>
-  <option
-    *ngFor="let control of controlIdentifiers"
-    [value]="control.controlIdentifier"
-  >
-    {{ control.controlIdentifier }} {{ control.controlName }}
-  </option>
-</select>
+<app-header></app-header>
+<div class="container">
+  <div class="select-container">
+    <h2>Select an Item:</h2>
+    <select
+      (change)="onSelectionChange($event)"
+      [(ngModel)]="selectedControlIdentifier"
+      aria-label="Select a control"
+    >
+      <option
+        *ngFor="let control of controlIdentifiers"
+        [value]="control.controlIdentifier"
+      >
+        {{ control.controlIdentifier }} - {{ control.controlName }}
+      </option>
+    </select>
 
-<div id="keywordsContainer">
-  <div *ngIf="controlKeywords.length === 0 && !isLoading">
-    <p>No keywords found.</p>
-  </div>
-  <div *ngFor="let controlKeyword of controlKeywords" class="control-group">
-    <div class="control-header">
-      <h3>Control Identifier: {{ controlKeyword.controlIdentifier }}</h3>
-      <h3>Control Name: {{ controlKeyword.controlName }}</h3>
+    <div id="keywordsContainer">
+      <div *ngIf="controlKeywords.length === 0 && !isLoading">
+        <p>No keywords found.</p>
+      </div>
+      <div *ngIf="isLoading">
+        <p>Loading keywords...</p>
+      </div>
+      <div *ngFor="let controlKeyword of controlKeywords" class="control-group">
+        <div class="control-header">
+          <h3>Control Identifier: {{ controlKeyword.controlIdentifier }}</h3>
+          <h3>Control Name: {{ controlKeyword.controlName }}</h3>
+          <h4>Keywords:</h4>
+        </div>
+        <ul class="keywords-list">
+          <li
+            *ngFor="let keyword of controlKeyword.keywords"
+            class="keyword-item"
+          >
+            {{ keyword }}
+          </li>
+        </ul>
+      </div>
     </div>
-    <ul class="keywords-list">
-      <li *ngFor="let keyword of controlKeyword.keywords" class="keyword-item">
-        {{ keyword }}
-      </li>
-    </ul>
+  </div>
+  <div class="pdfcontainer">
+    <app-example-pdf-viewer></app-example-pdf-viewer>
   </div>
 </div>

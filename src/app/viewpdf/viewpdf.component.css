@@ -1,11 +1,51 @@
 select {
-    width: 30%;
+    width: 100%;
     padding: 8px;
     margin: 4px 0;
     box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 20px;
+    height: 90vh;
+}
+
+.select-container {
+  background-color: rgb(0, 191, 255);
+  padding: 20px;
+  width: 20%;
+  margin: 0 20px 0 0;
+  border-radius: 10px;
+  color: white;
 }
 
 .keyword-item {
     cursor: pointer;
 }
 
+.keyword-item:hover {
+    background-color: #f0f0f0;
+    color: rgb(146, 146, 146);
+}
+
+.pdf-container {
+    width: 100%;
+    overflow: auto;
+    background-color: #f0f0f0;
+}
+
+pdf-viewer {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
+
+.pdfcontainer {
+    width: 90%;
+    height: 100%;
+    overflow: auto;
+    background-color: #f0f0f0;
+}

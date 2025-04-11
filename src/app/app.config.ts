@@ -7,6 +7,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
