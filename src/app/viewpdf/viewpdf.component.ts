@@ -18,6 +18,7 @@ import { HeaderComponent } from '../header/header.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { PdfComponent } from '../pdf/pdf.component';
+import { Router } from '@angular/router';
 
 interface ControlKeywordsDTO {
   controlIdentifier: string;
@@ -46,8 +47,8 @@ interface ControlIdentifierDTO {
     MatPaginatorModule,
     FormsModule,
     HeaderComponent,
-    PdfComponent,
-  ],
+    PdfComponent
+],
 })
 export class ViewPdfComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
@@ -60,6 +61,7 @@ export class ViewPdfComponent implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(PLATFORM_ID) private platformId: Object // Add this line
   ) {}
@@ -134,5 +136,17 @@ export class ViewPdfComponent implements OnInit, OnDestroy {
     this.selectedControlIdentifier = target.value;
     console.log('Control Identifiers:', this.selectedControlIdentifier);
     this.loadKeywords();
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  navigateToExtractedData() {
+    this.router.navigate(['/extracted-data']);
+  }
+
+  navigateToMain() {
+    this.router.navigate(['/result']);
   }
 }

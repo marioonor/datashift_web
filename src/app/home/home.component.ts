@@ -136,4 +136,8 @@ export class HomeComponent {
   navigateToExtractedData() {
     this.router.navigate(['/extracted-data']);
   }
+
+  navigateToViewPdf() {
+    this.router.navigate(['/view-pdf']);
+  }
 }

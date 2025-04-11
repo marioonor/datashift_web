@@ -35,7 +35,6 @@ export class AuthenService {
         this.isLoggedIn = false;
         if (typeof window !== 'undefined' && window.localStorage) {
             localStorage.removeItem('isLoggedIn');
-            // Clear other user-related data from local storage if needed
         } else {
             if (isDevMode()) {
                 console.warn('Local Storage is not available');
@@ -43,7 +42,6 @@ export class AuthenService {
         }
         this.logoutEvent.emit(); 
         this.router.navigate(['/login']).then(() => {
-            // Clear cache more aggressively
             window.location.replace('/login');
         });
     }

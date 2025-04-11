@@ -100,4 +100,8 @@ export class ContentComponent implements OnInit {
   navigateToMain() {
     this.router.navigate(['/result']);
   }
+
+  navigateToViewPdf() {
+    this.router.navigate(['/view-pdf']);
+  }
 }
