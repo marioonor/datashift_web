@@ -1,48 +1,122 @@
 <app-header></app-header>
-<button class="btn" (click)="navigateToHome()">Home</button>
-<button (click)="navigateToExtractedData()">Extracted Data</button>
-<button (click)="navigateToMain()">Results</button>
-<div class="container">
-  <div class="select-container">
-    <h2>Select an Item:</h2>
-    <select
-      (change)="onSelectionChange($event)"
-      [(ngModel)]="selectedControlIdentifier"
-      aria-label="Select a control"
-    >
-      <option
-        *ngFor="let control of controlIdentifiers"
-        [value]="control.controlIdentifier"
-      >
-        {{ control.controlIdentifier }} - {{ control.controlName }}
-      </option>
-    </select>
+<!-- Navigation Buttons -->
+<div class="navigation-buttons">
+  <button color="primary" (click)="navigateToHome()">Home</button>
+  <button color="primary" (click)="navigateToExtractedData()">
+    Extracted Data
+  </button>
+  <button color="primary" (click)="navigateToMain()">Results</button>
+</div>
 
+<div class="container">
+  <!-- Left Panel: Controls and Keywords -->
+  <div class="controls-panel">
+    <h2>Select Control & Search</h2>
+
+    <!-- Control Selection Dropdown -->
+    <mat-form-field appearance="outline" class="control-select-field">
+      <mat-label>Select a Control</mat-label>
+      <mat-select
+        [(ngModel)]="selectedControlIdentifier"
+        (selectionChange)="onSelectionChange($event.value)"
+        name="controlIdentifier"
+      >
+        <mat-option value="">-- Select --</mat-option>
+        <mat-option
+          *ngFor="let control of controlIdentifiers"
+          [value]="control.controlIdentifier"
+        >
+          {{ control.controlIdentifier }} - {{ control.controlName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Manual Search Bar -->
+    <div class="manual-search-controls">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Manual Search in PDF</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="manualSearchTerm"
+          (keyup.enter)="searchManually()"
+          placeholder="Enter text or click keyword below"
+        />
+        <button
+          class="cs-btn clear-button"
+          *ngIf="manualSearchTerm"
+          matSuffix
+          
+          aria-label="Clear Manual Search"
+          (click)="manualSearchTerm = ''; clearSearchHighlights()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button
+        class="cs-btn search-button"
+        
+        color="primary"
+        (click)="searchManually()"
+        matTooltip="Find Manually Entered Text"
+        [disabled]="!manualSearchTerm"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <!-- Keywords Display and Search Trigger -->
     <div id="keywordsContainer">
-      <div *ngIf="controlKeywords.length === 0 && !isLoading">
-        <p>No keywords found.</p>
+      <div *ngIf="isLoading" class="loading-indicator">
+        <mat-spinner diameter="30"></mat-spinner>
+        <span>Loading keywords...</span>
       </div>
-      <div *ngIf="isLoading">
-        <p>Loading keywords...</p>
-      </div>
-      <div *ngFor="let controlKeyword of controlKeywords" class="control-group">
-        <div class="control-header">
-          <h3>Control Identifier: {{ controlKeyword.controlIdentifier }}</h3>
-          <h3>Control Name: {{ controlKeyword.controlName }}</h3>
-          <h4>Keywords:</h4>
+
+      <div *ngIf="!isLoading && controlKeywords.length > 0">
+        <div
+          *ngFor="let controlKeyword of controlKeywords"
+          class="control-group"
+        >
+          <div class="control-header">
+            <h3>
+              {{ controlKeyword.controlIdentifier }} -
+              {{ controlKeyword.controlName }}
+            </h3>
+            <h4>Click a Keyword to Search:</h4>
+          </div>
+          <ul class="keywords-list clickable-keywords">
+            <li
+              *ngFor="let keyword of controlKeyword.keywords"
+              class="keyword-item"
+              (click)="searchByKeyword(keyword)"
+              matTooltip="Click to search for '{{ keyword }}'"
+            >
+              <!-- Assuming 'keyword' is a string. If it's an object like {name: '...'}, use {{ keyword.name }} -->
+              {{ keyword }}
+            </li>
+          </ul>
         </div>
-        <ul class="keywords-list">
-          <li
-            *ngFor="let keyword of controlKeyword.keywords"
-            class="keyword-item"
-          >
-            {{ keyword }}
-          </li>
-        </ul>
+      </div>
+
+      <div
+        *ngIf="
+          !isLoading &&
+          selectedControlIdentifier &&
+          controlKeywords.length === 0
+        "
+      >
+        <p>No keywords found for the selected control.</p>
+      </div>
+
+      <div *ngIf="!isLoading && !selectedControlIdentifier">
+        <p>Select a control above to view and search by its keywords.</p>
       </div>
     </div>
   </div>
+
   <div class="pdfcontainer">
-    <app-example-pdf-viewer></app-example-pdf-viewer>
+      <div *ngIf="showPdfViewer" class="pdf-viewer-container">
+        <app-pdf></app-pdf>
+      </div>
   </div>
 </div>

@@ -19,6 +19,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { PdfComponent } from '../pdf/pdf.component';
 import { Router } from '@angular/router';
+import {
+  FindOptions,
+  NgxExtendedPdfViewerService,
+} from 'ngx-extended-pdf-viewer';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 interface ControlKeywordsDTO {
   controlIdentifier: string;
@@ -47,22 +56,33 @@ interface ControlIdentifierDTO {
     MatPaginatorModule,
     FormsModule,
     HeaderComponent,
-    PdfComponent
-],
+    PdfComponent,
+    MatIconModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatOptionModule,
+  ],
+  providers: [NgxExtendedPdfViewerService],
 })
 export class ViewPdfComponent implements OnInit, OnDestroy {
+
   isLoading: boolean = false;
   showPdfViewer: boolean = true;
 
   controlKeywords: ControlKeywordsDTO[] = [];
   controlIdentifiers: ControlIdentifierDTO[] = [];
   selectedControlIdentifier: string = '';
+  manualSearchTerm: string = '';
   private subscriptions: Subscription[] = [];
+  searchTerm: any;
+  isPdfViewerReady: any;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private sanitizer: DomSanitizer,
+    private pdfService: NgxExtendedPdfViewerService,
     @Inject(PLATFORM_ID) private platformId: Object // Add this line
   ) {}
 
@@ -85,6 +105,10 @@ export class ViewPdfComponent implements OnInit, OnDestroy {
           this.controlIdentifiers = data;
           this.selectedControlIdentifier =
             this.controlIdentifiers[0].controlIdentifier;
+          if (this.controlIdentifiers.length > 0) {
+            this.selectedControlIdentifier =
+              this.controlIdentifiers[0].controlIdentifier;
+          }
           this.isLoading = false;
           console.log('Control Identifiers:', this.controlIdentifiers);
         },
@@ -103,7 +127,8 @@ export class ViewPdfComponent implements OnInit, OnDestroy {
 
   loadKeywords() {
     if (!this.selectedControlIdentifier) {
-      this.controlKeywords.length = 0;
+      // this.controlKeywords.length = 0;
+      this.controlKeywords = []; // Clear the control keywords if no identifier is selected
       return;
     }
 
@@ -120,7 +145,8 @@ export class ViewPdfComponent implements OnInit, OnDestroy {
         error: (error: HttpErrorResponse) => {
           this.isLoading = false;
           console.error('Error fetching control keywords:', error);
-          this.controlKeywords.length = 0;
+          // this.controlKeywords.length = 0;
+          this.controlKeywords = []; // Clear the control keywords on error
           if (error.status === 404) {
             console.error('Resource not found');
           } else if (error.status === 500) {
@@ -131,11 +157,88 @@ export class ViewPdfComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  onSelectionChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.selectedControlIdentifier = target.value;
+  onSelectionChange(event: MatSelectChange<any>): void {
+    let value: string = '';
+    if (typeof event === 'string') {
+      value = event;
+    } else if (event instanceof Event) {
+      const target = event.target as HTMLSelectElement;
+      value = target.value;
+    }
+    this.selectedControlIdentifier = value;
     console.log('Control Identifiers:', this.selectedControlIdentifier);
     this.loadKeywords();
+  }
+
+  searchManually(): void {
+    this.executeSearch(this.manualSearchTerm);
+  }
+
+  searchWithLoadedKeywords(): void {
+    if (
+      this.controlKeywords.length > 0 &&
+      this.controlKeywords[0].keywords?.length > 0
+    ) {
+      const keywordsString = this.controlKeywords[0].keywords.join('');
+      this.executeSearch(keywordsString, true);
+    } else {
+      console.warn('No keywords loaded to search for.');
+      this.clearSearchHighlights();
+    }
+  }
+
+  searchByKeyword(keyword: string): void {
+    if (keyword) {
+      console.log('Searching for keyword:', keyword);
+      this.manualSearchTerm = keyword;
+      this.executeSearch(keyword, false);
+    } else {
+      console.warn('No keyword provided for search.');
+      this.clearSearchHighlights();
+    }
+  }
+
+  private executeSearch(term: string, findMultiple: boolean = false): void {
+    if (term) {
+      const options: FindOptions = {
+        highlightAll: true,
+        matchCase: false,
+        wholeWords: false,
+      };
+      console.log(`Executing search for term: ${term}`, options);
+      this.pdfService.find(term, options);
+    } else {
+      console.warn('No search term provided.');
+      this.clearSearchHighlights();
+    }
+  }
+
+  clearSearchHighlights(): void {
+    this.pdfService.find('');
+  }
+
+  searchPdf(): void {
+    if (this.searchTerm) {
+      this.pdfService.find(this.searchTerm, {
+        highlightAll: true,
+        matchCase: false,
+        wholeWords: false,
+      });
+    } else {
+      this.pdfService.find('');
+    }
+  }
+
+  findNext(): void {
+    if (this.searchTerm) {
+      this.pdfService.findNext();
+    }
+  }
+
+  findPrevious(): void {
+    if (this.searchTerm) {
+      this.pdfService.findPrevious();
+    }
   }
 
   navigateToHome() {

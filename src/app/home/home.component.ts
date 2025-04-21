@@ -99,6 +99,7 @@ export class HomeComponent {
             .subscribe({
               next: (extractResponse) => {
                 this.uploadMessage = 'Data extracted successfully!';
+                this.clearUploadMessageAfterDelay();
                 this.isUploadSuccessful = true;
                 this.uploadProgressMessage = '';
                 console.log('Data extracted successfully:', extractResponse);
