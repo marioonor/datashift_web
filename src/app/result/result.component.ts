@@ -13,7 +13,6 @@ import { NgIf } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { GroupeddatamodalcomponentComponent } from '../groupeddatamodalcomponent/groupeddatamodalcomponent.component';
 
-// Define the interfaces for the grouped data
 interface PageKeyword {
   pages: string[];
   keyword: string;
@@ -25,7 +24,6 @@ interface GroupedData {
   pageKeywords: PageKeyword[];
 }
 
-// Define the interface for the main data
 export interface MainData {
   controlId: string;
   controlName: string;
@@ -38,7 +36,6 @@ export interface MainData {
   groupedData?: GroupedData;
 }
 
-// Define the interface for the modal data
 interface ModalData {
   controlId: string;
   documentName: string;
@@ -94,7 +91,6 @@ export class ResultComponent implements OnInit {
     this.http.get<MainData[]>('http://localhost:8085/main-data').subscribe({
       next: (data) => {
         console.log('Main data received:', data);
-        // Add this line to inspect the data
         data.forEach((item) => console.log('Main Data Item:', item));
         this.mainData = data;
         this.filteredData = [...this.mainData];
@@ -115,21 +111,17 @@ export class ResultComponent implements OnInit {
       .subscribe({
         next: (groupedData) => {
           console.log('Grouped data received:', groupedData);
-          // Map grouped data to main data
           this.filteredData.forEach((item) => {
-            // Find the group that matches the item's documentName
             const matchingGroup = groupedData.find(
               (group) =>
                 group.documentName.replace(/^\d+\.\s/, '') === item.documentName
             );
 
             if (matchingGroup) {
-              // Filter pageKeywords based on the controlId
               const filteredPageKeywords = matchingGroup.pageKeywords.filter(
-                (pageKeyword) => pageKeyword.controlIds.includes(item.controlId) // Check if the controlIds array contains the current item's controlId
+                (pageKeyword) => pageKeyword.controlIds.includes(item.controlId) 
               );
 
-              // Create a new GroupedData object with only the filtered pageKeywords
               item.groupedData = {
                 documentName: matchingGroup.documentName,
                 pageKeywords: filteredPageKeywords,
@@ -137,7 +129,6 @@ export class ResultComponent implements OnInit {
             } else {
               item.groupedData = undefined;
             }
-            // Add these lines to check the matching
             console.log('Matching group: ', matchingGroup);
           });
         },
@@ -148,7 +139,6 @@ export class ResultComponent implements OnInit {
   }
 
   openEvidenceModal(item: MainData) {
-    // Prepare the modal data
     const modalData: ModalData = {
       controlId: item.controlId,
       documentName: item.documentName,
@@ -157,9 +147,8 @@ export class ResultComponent implements OnInit {
     console.log('Modal Data to be passed:', modalData);
     console.log('Grouped Data to be passed:', item.groupedData);
 
-    // Open the modal and pass the modal data
     this.dialog.open(GroupeddatamodalcomponentComponent, {
-      data: { modalData, groupedData: item.groupedData }, // Pass both modalData and groupedData
+      data: { modalData, groupedData: item.groupedData }, 
       width: '800px',
       height: '400px',
     });

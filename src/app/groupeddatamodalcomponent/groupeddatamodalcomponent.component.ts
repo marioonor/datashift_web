@@ -11,7 +11,6 @@ import { Router, RouterModule } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 
-// Define the interfaces for the grouped data
 interface PageKeyword {
   pages: string[];
   keyword: string;
@@ -22,7 +21,6 @@ interface GroupedData {
   pageKeywords: PageKeyword[];
 }
 
-// Define the interface for the modal data
 interface ModalData {
   controlId: string;
   documentName: string;
@@ -46,7 +44,7 @@ interface DialogData {
     MatSortModule,
     MatPaginatorModule,
     RouterModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   templateUrl: './groupeddatamodalcomponent.component.html',
   styleUrl: './groupeddatamodalcomponent.component.css',
@@ -59,21 +57,16 @@ export class GroupeddatamodalcomponentComponent implements OnInit {
   dialog: any;
   isLoading: any;
 
-  constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData, private http: HttpClient, private router: Router) {
+  constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private http: HttpClient,
+    private router: Router
+  ) {
     if (data) {
       this.groupedData = data.groupedData;
       this.modalData = data.modalData;
     }
   }
 
-  ngOnInit(): void {
-  }
-
-  navigateToHome() {
-    this.router.navigate(['/home']);
-  }
-
-  navigateToExtractedData() {
-    this.router.navigate(['/extracted-data']);
-  }
+  ngOnInit(): void {}
 }

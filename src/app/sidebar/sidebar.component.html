@@ -1,45 +1,45 @@
 <div class="sidebar">
-<aside id="sidebar-aside">
-  <h2>Keywords</h2>
-  <div id="loadingIndicator" *ngIf="isLoading">Loading...</div>
-  <div *ngIf="controlIdentifiers.length > 0">
-    <select (change)="onControlIdentifierChange($event)">
-      <option value="">Select Control Identifier</option>
-      <option
-        *ngFor="let controlIdentifier of controlIdentifiers"
-        [value]="controlIdentifier.controlIdentifier"
-      >
-        {{ controlIdentifier.controlIdentifier }} -
-        {{ controlIdentifier.controlName }}
-      </option>
-    </select>
-  </div>
-  <div id="keywordsContainer">
-    <div *ngIf="controlKeywords.length === 0 && !isLoading">
-      <p>No keywords found.</p>
-    </div>
-    <div *ngFor="let controlKeyword of controlKeywords" class="control-group">
-      <div class="control-header">
-        <h3>Control Identifier: {{ controlKeyword.controlIdentifier }}</h3>
-        <h3>Control Name: {{ controlKeyword.controlName }}</h3>
-      </div>
-      <ul class="keywords-list">
-        <li
-          *ngFor="let keyword of controlKeyword.keywords"
-          class="keyword-item"
+  <aside id="sidebar-aside">
+    <h2>Keywords</h2>
+    <div id="loadingIndicator" *ngIf="isLoading">Loading...</div>
+    <div *ngIf="controlIdentifiers.length > 0">
+      <select (change)="onControlIdentifierChange($event)">
+        <option value="">Select Control Identifier</option>
+        <option
+          *ngFor="let controlIdentifier of controlIdentifiers"
+          [value]="controlIdentifier.controlIdentifier"
         >
-          {{ keyword }}
-        </li>
-      </ul>
+          {{ controlIdentifier.controlIdentifier }} -
+          {{ controlIdentifier.controlName }}
+        </option>
+      </select>
     </div>
-  </div>
-</aside>
+    <div id="keywordsContainer">
+      <div *ngIf="controlKeywords.length === 0 && !isLoading">
+        <p>No keywords found.</p>
+      </div>
+      <div *ngFor="let controlKeyword of controlKeywords" class="control-group">
+        <div class="control-header">
+          <h3>Control Identifier: {{ controlKeyword.controlIdentifier }}</h3>
+          <h3>Control Name: {{ controlKeyword.controlName }}</h3>
+        </div>
+        <ul class="keywords-list">
+          <li
+            *ngFor="let keyword of controlKeyword.keywords"
+            class="keyword-item"
+          >
+            {{ keyword }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
   <p>Upload New Keywords:</p>
   <input
     type="file"
     (change)="onFileChange($event)"
     placeholder="Upload file"
-  /><br/><br/>
+  /><br /><br />
   <button class="btn btn-primary" (click)="uploadFile()">Upload!</button>
   <p *ngIf="uploadProgressMessage">{{ uploadProgressMessage }}</p>
   <div
@@ -51,4 +51,3 @@
     {{ uploadMessage }}
   </div>
 </div>
-

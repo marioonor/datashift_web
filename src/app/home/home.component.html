@@ -27,10 +27,14 @@
       </div>
     </div>
   </div>
+  <div class="keywords-container">
+    <p type="button" class="keyword" (click)="openKeywordSidebarModal()">
+      Add new keywords?
+    </p>
+  </div>
 </div>
 <div class="side-img-container">
-  <div class="uploads">
-    <app-sidebar></app-sidebar>
-  </div>
-  <img class="pdflogo" src="/assets/images/pdfphoto.jpg" alt="pdflogo" />
+  <footer class="app-footer">
+    <p>&copy; {{ currentYear }} Mario Onor. All rights reserved.</p>
+  </footer>
 </div>

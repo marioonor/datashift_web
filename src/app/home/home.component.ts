@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ExtractedData } from '../model/extractedData';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthenService } from '../service/AuthenService';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,6 @@ import { AuthenService } from '../service/AuthenService';
   styleUrl: './home.component.css',
   standalone: true,
   imports: [
-    SidebarComponent,
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -28,20 +29,23 @@ import { AuthenService } from '../service/AuthenService';
     MatSortModule,
     MatPaginatorModule,
     HeaderComponent,
+    MatDialogModule
   ],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   data: ExtractedData[] = [];
-  filteredData: ExtractedData[] = []; // Array to hold the filtered data
+  filteredData: ExtractedData[] = []; 
   selectedFile: File | null = null;
   uploadMessage: string = '';
   isUploadSuccessful: boolean = false;
   uploadProgressMessage: string = '';
+  currentYear: number = new Date().getFullYear();
 
   constructor(
     private http: HttpClient,
     private authService: AuthenService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -84,15 +88,14 @@ export class HomeComponent {
     const formData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
 
-    // First, upload to /api/data-shift/upload
+    this.uploadProgressMessage = 'Uploading file...';
     this.http
       .post<any>('http://localhost:8085/api/data-shift/upload', formData)
       .subscribe({
         next: (uploadResponse) => {
           console.log('File uploaded successfully:', uploadResponse);
-          const documentName = uploadResponse.documentName; // Get the documentName from the documentName field
+          const documentName = uploadResponse.documentName; 
 
-          // Then, send the documentName to /data/pdf
           const params = new HttpParams().set('documentName', documentName);
           this.http
             .post<any>('http://localhost:8085/data/pdf', null, { params })
@@ -122,6 +125,17 @@ export class HomeComponent {
           console.error('File upload error:', uploadError);
         },
       });
+  }
+
+  openKeywordSidebarModal(): void {
+    const dialogRef = this.dialog.open(SidebarComponent, {
+      width: '500px',
+      disableClose: false 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The keyword sidebar dialog was closed');
+    });
   }
 
   private clearUploadMessageAfterDelay() {
