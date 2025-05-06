@@ -10,6 +10,11 @@ import {
   PdfLoadedEvent,
 } from 'ngx-extended-pdf-viewer';
 
+interface PdfFile {
+  name: string;
+  url: string;
+}
+
 @Component({
   selector: 'app-pdf',
   templateUrl: './pdf.component.html',

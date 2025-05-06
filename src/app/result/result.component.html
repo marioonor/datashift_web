@@ -10,28 +10,32 @@
     <tr>
       <th class="table-header control-id-col">Control Id</th>
       <th class="table-header control-name-col">Control Name</th>
-      <th class="table-header control-name-col">Control Description</th>
+      <th class="table-header control-name-des">Control Description</th>
+      <th class="table-header control-name-keywords">Keywords</th> <!-- Header is correct -->
       <th class="table-header evidence-col">Evidence</th>
       <th class="table-header remarks-col">Remarks</th>
       <th class="table-header status-col">Status</th>
     </tr>
   </thead>
   <tbody>
+    <!-- Loop through each item in filteredData -->
     <tr *ngFor="let item of filteredData">
+      <!-- Standard table data cells for each property -->
       <td class="control-id-col">{{ item.controlId }}</td>
       <td class="control-name-col">{{ item.controlName }}</td>
       <td class="control-description-col">{{ item.controlDescription }}</td>
-      <td class="evidence-col" (click)="openEvidenceModal(item)" style="cursor: pointer;">
-        <div *ngIf="item.groupedData">
-          {{ item.evidence }}
-        </div>
-        <div *ngIf="!item.groupedData">
-          {{ item.evidence }}
-        </div>
+      <!-- Correct way to display keywords in a standard table -->
+      <td class="control-keywords-col">{{ item.keywords }}</td> <!-- Added this td -->
+      <td
+        class="evidence-col"
+        (click)="openEvidenceModal(item)"
+        style="cursor: pointer"
+      >
+        <!-- Simplified evidence display - *ngIf logic seems redundant here -->
+        {{ item.evidence }}
       </td>
       <td class="remarks-col">{{ item.remarks }}</td>
       <td class="status-col">{{ item.status }}</td>
     </tr>
   </tbody>
 </table>
-  

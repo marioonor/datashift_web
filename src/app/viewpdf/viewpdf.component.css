@@ -22,6 +22,11 @@ select {
   color: white;
 }
 
+.controls-panel {
+  width: 40%;
+  padding: 20px;
+}
+
 .keyword-item {
   cursor: pointer;
 }
@@ -29,6 +34,14 @@ select {
 .keyword-item:hover {
   background-color: #f0f0f0;
   color: rgb(146, 146, 146);
+}
+
+.keywords-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 20px;
 }
 
 .pdfcontainer {

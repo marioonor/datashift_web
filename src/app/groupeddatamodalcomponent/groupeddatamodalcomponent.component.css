@@ -1,5 +1,7 @@
 .container {
   margin: 30px;
+  overflow-y: auto;
+  max-width: 600px;
 }
 
 .modal-container {
