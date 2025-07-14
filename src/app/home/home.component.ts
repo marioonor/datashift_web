@@ -155,4 +155,8 @@ export class HomeComponent implements OnInit {
   navigateToViewPdf() {
     this.router.navigate(['/view-pdf']);
   }
+
+  navigateToViewAllData() {
+    this.router.navigate(['/viewdata']);
+  }
 }

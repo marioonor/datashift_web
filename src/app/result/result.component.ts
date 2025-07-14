@@ -206,4 +206,8 @@ export class ResultComponent implements OnInit {
   navigateToViewPdf() {
     this.router.navigate(['/view-pdf']);
   }
+
+  navigateToViewAllData() {
+    this.router.navigate(['/viewdata']);
+  }
 }

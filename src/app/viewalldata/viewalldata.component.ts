@@ -24,7 +24,7 @@ export interface MainData {
 }
 
 @Component({
-  selector: 'app-viewalldata',
+  selector: 'app-pdf',
   standalone: true, // Make it standalone
   imports: [
     CommonModule,
