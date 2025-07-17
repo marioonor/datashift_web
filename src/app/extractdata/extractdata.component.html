@@ -1,0 +1,126 @@
+<div class="table-container">
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th class="text-nowrap">Scanned ID</th>
+                <th>Keyword</th>
+                <th>Page</th>
+                <th>Sentence</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (data of extracteddata(); track data.scannedId) {
+            <tr>
+                <td>{{ data.scannedId }}</td>
+                <td>{{ data.keyword }}</td>
+                <td>{{ data.page }}</td>
+                <td>{{ data.sentence }}</td>
+                <td class="text-nowrap">
+                    <button
+                        type="button"
+                        class="btn btn-sm"
+                        (click)="onEdit(data)"
+                        style="padding: 5px 10px; margin: 5px"
+                    >
+                        <img
+                            [src]="editIcon"
+                            style="width: auto; height: 20px"
+                            alt=""
+                        />
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-sm"
+                        (click)="onDelete(+data.scannedId)"
+                        style="padding: 5px 10px"
+                    >
+                        <img
+                            [src]="deleteIcon"
+                            style="width: auto; height: 20px"
+                            alt=""
+                        />
+                    </button>
+                </td>
+            </tr>
+            } @if (extracteddata().length === 0) {
+            <tr>
+                <td colspan="5" class="no-data">No data available</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div
+        class="modal fade"
+        id="editTodoModal"
+        tabindex="-1"
+        aria-labelledby="editTodoModalLabel"
+        aria-hidden="true"
+    >
+        @if (editingData) {
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editTodoModalLabel">
+                        Edit Data (ID: {{ editingData.scannedId }})
+                    </h1>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <form #editForm="ngForm">
+                        <div class="mb-3">
+                            <label for="keyword" class="form-label"
+                                >Keyword</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="keyword"
+                                name="keyword"
+                                [(ngModel)]="editingData.keyword"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="page" class="form-label">Page</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="page"
+                                name="page"
+                                [(ngModel)]="editingData.page"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="sentence" class="form-label"
+                                >Sentence</label
+                            >
+                            <textarea
+                                class="form-control"
+                                id="sentence"
+                                name="sentence"
+                                rows="4"
+                                [(ngModel)]="editingData.sentence"
+                            ></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        (click)="onUpdate()"
+                        data-bs-dismiss="modal"
+                    >
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
