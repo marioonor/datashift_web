@@ -1,6 +1,10 @@
 export interface ExtractedData {
-    scannedId: string;
+    id: number;
     keyword: string;
     page: number;
     sentence: string;
+}
+
+export interface ScanPdfData {
+    
 }

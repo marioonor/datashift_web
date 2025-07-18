@@ -1,8 +1,22 @@
 <div class="table-container">
+    <button class="pdf-scan" mat-button (click)="openDialog()">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Scan PDF File
+    </button>
+
+    <div
+        class="modal fade"
+        id="scanPdfModal"
+        tabindex="-1"
+        aria-labelledby="scanPdfModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered"></div>
+    </div>
+
     <table class="custom-table">
         <thead>
             <tr>
-                <th class="text-nowrap">Scanned ID</th>
+                <th class="text-nowrap">Control Number</th>
                 <th>Keyword</th>
                 <th>Page</th>
                 <th>Sentence</th>
@@ -10,9 +24,9 @@
             </tr>
         </thead>
         <tbody>
-            @for (data of extracteddata(); track data.scannedId) {
+            @for (data of extracteddata(); track data.id) {
             <tr>
-                <td>{{ data.scannedId }}</td>
+                <td>{{ data.id }}</td>
                 <td>{{ data.keyword }}</td>
                 <td>{{ data.page }}</td>
                 <td>{{ data.sentence }}</td>
@@ -32,7 +46,7 @@
                     <button
                         type="button"
                         class="btn btn-sm"
-                        (click)="onDelete(+data.scannedId)"
+                        (click)="onDelete(+data.id)"
                         style="padding: 5px 10px"
                     >
                         <img
@@ -50,6 +64,8 @@
             }
         </tbody>
     </table>
+
+    <!-- Modal to Update the data from the table -->
     <div
         class="modal fade"
         id="editTodoModal"
@@ -62,7 +78,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editTodoModalLabel">
-                        Edit Data (ID: {{ editingData.scannedId }})
+                        Edit Data (ID: {{ editingData.id }})
                     </h1>
                     <button
                         type="button"
