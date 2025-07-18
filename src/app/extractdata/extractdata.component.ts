@@ -106,6 +106,7 @@ export class ExtractdataComponent implements OnInit {
         });
     }
 
+    // To open the modal
     readonly dialog = inject(MatDialog);
 
     openDialog() {
@@ -116,8 +117,11 @@ export class ExtractdataComponent implements OnInit {
             panelClass: 'custom-dialog-container',
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`);
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                console.log('Dialog closed with success, refreshing data...');
+                this.getData();
+            }
         });
     }
 }

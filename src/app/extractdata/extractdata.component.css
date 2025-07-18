@@ -51,9 +51,10 @@
     padding: 2rem;
 }
 
-.pdf-scan {
-    background-color: rgb(18, 205, 238);
+.pdf-scan-btn {
+    background-color: #2d8bf0;
     margin: 20px 0;
+    color: white;
 }
 
 button {
@@ -70,14 +71,16 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: rgb(18, 205, 238);
     box-shadow: 0 6px 18px rgba(0, 86, 179, 0.3);
     transform: translateY(-2px);
+    color: white;
 }
 
 button:focus {
     outline: 2px solid #80bdff;
     outline-offset: 2px;
+    color: white;
 }
 
 button i {
