@@ -12,58 +12,59 @@
     >
         <div class="modal-dialog modal-dialog-centered"></div>
     </div>
-
-    <table class="custom-table">
-        <thead>
-            <tr>
-                <th class="text-nowrap">Control Number</th>
-                <th>Keyword</th>
-                <th>Page</th>
-                <th>Sentence</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (data of extracteddata(); track data.id) {
-            <tr>
-                <td>{{ data.id }}</td>
-                <td>{{ data.keyword }}</td>
-                <td>{{ data.page }}</td>
-                <td>{{ data.sentence }}</td>
-                <td class="text-nowrap">
-                    <button
-                        type="button"
-                        class="btn btn-sm"
-                        (click)="onEdit(data)"
-                        style="padding: 5px 10px; margin: 5px"
-                    >
-                        <img
-                            [src]="editIcon"
-                            style="width: auto; height: 20px"
-                            alt=""
-                        />
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-sm"
-                        (click)="onDelete(+data.id)"
-                        style="padding: 5px 10px"
-                    >
-                        <img
-                            [src]="deleteIcon"
-                            style="width: auto; height: 20px"
-                            alt=""
-                        />
-                    </button>
-                </td>
-            </tr>
-            } @if (extracteddata().length === 0) {
-            <tr>
-                <td colspan="5" class="no-data">No data available</td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div class="tbl-container">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th class="text-nowrap">Control Number</th>
+                    <th>Keyword</th>
+                    <th>Page</th>
+                    <th>Sentence</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (data of extracteddata(); track data.id) {
+                <tr>
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.keyword }}</td>
+                    <td>{{ data.page }}</td>
+                    <td>{{ data.sentence }}</td>
+                    <td class="text-nowrap">
+                        <button
+                            type="button"
+                            class="btn btn-sm"
+                            (click)="onEdit(data)"
+                            style="padding: 5px 10px; margin: 5px"
+                        >
+                            <img
+                                [src]="editIcon"
+                                style="width: auto; height: 20px"
+                                alt=""
+                            />
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm"
+                            (click)="onDelete(+data.id)"
+                            style="padding: 5px 10px"
+                        >
+                            <img
+                                [src]="deleteIcon"
+                                style="width: auto; height: 20px"
+                                alt=""
+                            />
+                        </button>
+                    </td>
+                </tr>
+                } @if (extracteddata().length === 0) {
+                <tr>
+                    <td colspan="5" class="no-data">No data available</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
     <!-- Modal to Update the data from the table -->
     <div

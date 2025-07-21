@@ -1,0 +1,94 @@
+<div class="bg-cover">
+    <div class="position-absolute top-0 end-0 m-3">
+        <a
+            href="#"
+            (click)="openLogin(); $event.preventDefault()"
+            class="btn btn-light me-2"
+            >Login</a
+        >
+        <a
+            href="#"
+            (click)="openRegister(); $event.preventDefault()"
+            class="btn btn-outline-light"
+            >Register</a
+        >
+    </div>
+    <div class="bg-cover" *ngIf="showAuthForm">
+        <div class="container">
+            <div class="card shadow-lg p-4 position-relative" style="width: 400px;">
+                <button
+                    class="btn-close position-absolute top-0 end-0 m-2"
+                    (click)="closeForm()"
+                    aria-label="Close"
+                ></button>
+                <h2 class="text-center mb-4">
+                    {{ isLogin ? "Login" : "Register" }}
+                </h2>
+
+                <form (ngSubmit)="onSubmit($event)">
+                    <div class="mb-3" *ngIf="!isLogin">
+                        <label for="username" class="form-label"
+                            >Username</label
+                        >
+                        <input
+                            type="text"
+                            id="username"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label"
+                            >Email Address</label
+                        >
+                        <input
+                            type="email"
+                            id="email"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label"
+                            >Password</label
+                        >
+                        <input
+                            type="password"                           
+                            class="form-control"
+                            id="password"
+                            required
+                        />
+                    </div>
+                    <div class="mb-3" *ngIf="!isLogin">
+                        <label for="confirmPassword" class="form-label"
+                            >Confirm Password</label
+                        >
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        {{ isLogin ? "Login" : "Register" }}
+                    </button>
+                </form>
+
+                <p class="text-center mt-3">
+                    <a
+                        href="#"
+                        (click)="toggleForm()
+                        ;
+                        $event.preventDefault()"
+                        >{{
+                            isLogin
+                                ? "Don't have an account? Register"
+                                : "Already have an account? Login"
+                        }}</a
+                    >
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
