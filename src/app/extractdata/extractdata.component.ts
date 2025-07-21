@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
     OnInit,
     Component,
@@ -10,14 +10,13 @@ import { ExtractedData } from '../model/extracteddata.model';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-// import { ToastrService } from 'ngx-toastr'; // Make sure you have ngx-toastr installed and imported
 import { DialogContentScannedPdf } from '../dialog/DialogContentScannedPdf';
 
 declare var bootstrap: any;
 
 @Component({
     selector: 'app-extractdata',
-    imports: [FormsModule, MatButtonModule, MatDialogModule],
+    imports: [FormsModule, MatButtonModule, MatDialogModule, HttpClientModule],
     templateUrl: './extractdata.component.html',
     styleUrl: './extractdata.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +24,6 @@ declare var bootstrap: any;
 export class ExtractdataComponent implements OnInit {
     extracteddata = signal<ExtractedData[]>([]);
     private httpClient = inject(HttpClient);
-    // private toastr = inject(ToastrService);
 
     editIcon: string = 'assets/images/edit.png';
     deleteIcon: string = 'assets/images/delete.png';
