@@ -1,4 +1,3 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
     OnInit,
     Component,
@@ -11,38 +10,42 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DialogContentScannedPdf } from '../dialog/DialogContentScannedPdf';
+import { DataService } from '../service/data.service';
+import { AuthService } from '../service/auth.service';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 declare var bootstrap: any;
 
 @Component({
     selector: 'app-extractdata',
-    imports: [FormsModule, MatButtonModule, MatDialogModule, HttpClientModule],
+    imports: [CommonModule, FormsModule, MatButtonModule, MatDialogModule],
     templateUrl: './extractdata.component.html',
     styleUrl: './extractdata.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExtractdataComponent implements OnInit {
     extracteddata = signal<ExtractedData[]>([]);
-    private httpClient = inject(HttpClient);
+    private dataService = inject(DataService); 
+    constructor(private router: Router, private authService: AuthService) {} 
 
     editIcon: string = 'assets/images/edit.png';
     deleteIcon: string = 'assets/images/delete.png';
 
     editingData: ExtractedData | null = null;
+    private editModal: any;
 
     ngOnInit() {
         this.getData();
     }
 
     getData() {
-        this.httpClient
-            .get<ExtractedData[]>('http://localhost:8080/api/scanneddata')
-            .subscribe({
-                next: (data) => {
-                    this.extracteddata.set(data);
-                },
-                error: (err) => console.error('Failed to fetch data', err),
-            });
+        this.dataService.getData().subscribe({
+            next: (data) => {
+                this.extracteddata.set(data);
+            },
+            error: (err) => console.error('Failed to fetch data', err),
+        });
     }
 
     //To call an edit modal
@@ -52,8 +55,9 @@ export class ExtractdataComponent implements OnInit {
             setTimeout(() => {
                 const modalElement = document.getElementById('editTodoModal');
                 if (modalElement) {
-                    const modal = new bootstrap.Modal(modalElement);
-                    modal.show();
+                    this.editModal = new bootstrap.Modal(modalElement);
+                    this.editModal.show();
+
                 }
             });
         } else {
@@ -67,23 +71,25 @@ export class ExtractdataComponent implements OnInit {
             return;
         }
 
-        const updateUrl = `http://localhost:8080/api/scanneddata/${this.editingData.id}`;
-        this.httpClient
-            .put<ExtractedData>(updateUrl, this.editingData)
-            .subscribe({
-                next: (updatedDataFromServer) => {
-                    this.extracteddata.update((currentData) => {
-                        const index = currentData.findIndex(
-                            (d) => d.id === updatedDataFromServer.id
-                        );
-                        if (index > -1) {
-                            currentData[index] = updatedDataFromServer;
-                        }
-                        return [...currentData];
-                    });
-                    this.editingData = null;
+        this.dataService.updateData(this.editingData).subscribe({
+            next: (updatedDataFromServer) => {
+                this.extracteddata.update((currentData) => {
+                    const index = currentData.findIndex(
+                        (d) => d.id === updatedDataFromServer.id
+                    );
+                    if (index > -1) {
+                        currentData[index] = updatedDataFromServer;
+                    }
+                    return [...currentData];
+                });
+                this.editingData = null;
+                this.editModal?.hide();
                 },
-            });
+            error: (err) => {
+                console.error('Update failed', err);
+                alert('Update failed. Please try again.');
+            },
+        });
     }
 
     // To delete the data
@@ -92,14 +98,16 @@ export class ExtractdataComponent implements OnInit {
             return;
         }
 
-        const deleteUrl = `http://localhost:8080/api/scanneddata/${id}`;
-        this.httpClient.delete(deleteUrl).subscribe({
+        this.dataService.deleteData(id).subscribe({
             next: () => {
-                this.getData();
-                console.log('Data deleted successfully');
+                this.extracteddata.update((currentData) =>
+                    currentData.filter((d) => d.id !== id)
+                );
+                console.log(`Data with id ${id} deleted successfully`);
             },
             error: (err) => {
                 console.error('Delete failed', err);
+                alert('Failed to delete data. Please try again.');
             },
         });
     }
@@ -121,5 +129,9 @@ export class ExtractdataComponent implements OnInit {
                 this.getData();
             }
         });
+    }
+
+    logout() {
+        this.authService.logout();
     }
 }

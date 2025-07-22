@@ -4,7 +4,3 @@ export interface ExtractedData {
     page: number;
     sentence: string;
 }
-
-export interface ScanPdfData {
-    
-}
