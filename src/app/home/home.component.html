@@ -15,7 +15,10 @@
     </div>
     <div class="bg-cover" *ngIf="showAuthForm">
         <div class="container">
-            <div class="card shadow-lg p-4 position-relative" style="width: 400px;">
+            <div
+                class="card shadow-lg p-4 position-relative"
+                style="width: 400px"
+            >
                 <button
                     class="btn-close position-absolute top-0 end-0 m-2"
                     (click)="closeForm()"
@@ -33,6 +36,8 @@
                         <input
                             type="text"
                             id="username"
+                            name="name"
+                            [(ngModel)]="name"
                             class="form-control"
                             required
                         />
@@ -44,18 +49,22 @@
                         <input
                             type="email"
                             id="email"
+                            name="email"
+                            [(ngModel)]="email"
                             class="form-control"
                             required
                         />
                     </div>
                     <div class="mb-3">
-                        <label for="username" class="form-label"
+                        <label for="password" class="form-label"
                             >Password</label
                         >
                         <input
-                            type="password"                           
+                            type="password"
                             class="form-control"
                             id="password"
+                            name="password"
+                            [(ngModel)]="password"
                             required
                         />
                     </div>
@@ -66,6 +75,8 @@
                         <input
                             type="password"
                             id="confirmPassword"
+                            name="confirmPassword"
+                            [(ngModel)]="confirmPassword"
                             class="form-control"
                             required
                         />
@@ -78,9 +89,7 @@
                 <p class="text-center mt-3">
                     <a
                         href="#"
-                        (click)="toggleForm()
-                        ;
-                        $event.preventDefault()"
+                        (click)="toggleForm(); $event.preventDefault()"
                         >{{
                             isLogin
                                 ? "Don't have an account? Register"

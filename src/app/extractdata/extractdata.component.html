@@ -1,17 +1,13 @@
 <div class="table-container">
-    <button class="pdf-scan-btn" (click)="openDialog()">
-        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Scan PDF File
-    </button>
-
-    <div
-        class="modal fade"
-        id="scanPdfModal"
-        tabindex="-1"
-        aria-labelledby="scanPdfModalLabel"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog modal-dialog-centered"></div>
+    <div class="d-flex justify-content-end align-items-center mb-3">
+        <button class="pdf-scan-btn me-2" (click)="openDialog()">
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Scan PDF File
+        </button>
+        <button class="btn btn-outline-secondary" (click)="logout()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+        </button>
     </div>
+
     <div class="tbl-container">
         <table class="custom-table">
             <thead>
@@ -84,12 +80,11 @@
                     <button
                         type="button"
                         class="btn-close"
-                        data-bs-dismiss="modal"
                         aria-label="Close"
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <form #editForm="ngForm">
+                    <form #editForm="ngForm" (ngSubmit)="onUpdate()">
                         <div class="mb-3">
                             <label for="keyword" class="form-label"
                                 >Keyword</label
@@ -127,14 +122,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        (click)="onUpdate()"
-                        data-bs-dismiss="modal"
-                    >
-                        Save changes
-                    </button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
