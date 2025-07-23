@@ -1,12 +1,31 @@
 <div class="table-container">
     <div class="d-flex justify-content-end align-items-center mb-3">
-        <div
-            class="d-flex align-items-center"
-            style="width: 100%;"
-        >
-            <h4 class="mb-0" style="color: white; height: 100%;">
-                <strong style="background-color: #2d8bf0; padding: 12px 20px; border-radius: 50%;">{{userFirstName}}</strong>
+        <div class="d-flex align-items-center" style="width: 100%">
+            <h4 class="mb-0" style="color: white; height: 100%">
+                <strong
+                    style="
+                        background-color: #2d8bf0;
+                        padding: 12px 20px;
+                        border-radius: 50%;
+                    "
+                    >{{ userFirstName }}</strong
+                >
             </h4>
+            <div
+                class="input-group custom-search-bar"
+                style="width: 70%; margin-left: 50px"
+            >
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search ..."
+                    aria-label="Search"
+                    [(ngModel)]="searchText"
+                />
+                <button class="btn btn-primary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
         </div>
         <button class="pdf-scan-btn me-2 text-nowrap" (click)="openDialog()">
             <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Scan PDF File
@@ -31,7 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for (data of extracteddata(); track data.id) {
+                @for (data of filteredData; track data.id) {
                 <tr>
                     <td>{{ data.id }}</td>
                     <td>{{ data.keyword }}</td>
@@ -64,7 +83,7 @@
                         </button>
                     </td>
                 </tr>
-                } @if (extracteddata().length === 0) {
+                } @if (filteredData.length === 0) {
                 <tr>
                     <td colspan="5" class="no-data">No data available</td>
                 </tr>
@@ -81,8 +100,8 @@
         aria-labelledby="editTodoModalLabel"
         aria-hidden="true"
     >
-        @if (editingData) {
         <div class="modal-dialog modal-dialog-centered">
+            @if (editingData) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editTodoModalLabel">
@@ -91,11 +110,16 @@
                     <button
                         type="button"
                         class="btn-close"
+                        data-bs-dismiss="modal"
                         aria-label="Close"
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <form #editForm="ngForm" (ngSubmit)="onUpdate()">
+                    <form
+                        id="editForm"
+                        #editForm="ngForm"
+                        (ngSubmit)="onUpdate()"
+                    >
                         <div class="mb-3">
                             <label for="keyword" class="form-label"
                                 >Keyword</label
@@ -133,12 +157,16 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
+                    <button
+                        type="submit"
+                        form="editForm"
+                        class="btn btn-primary"
+                    >
                         Save changes
                     </button>
                 </div>
             </div>
+            }
         </div>
-        }
     </div>
 </div>
