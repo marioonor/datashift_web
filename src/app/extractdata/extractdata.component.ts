@@ -14,6 +14,8 @@ import { DataService } from '../service/data.service';
 import { AuthService } from '../service/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { UserResponse } from '../model/auth.models';
+import { Subscription } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -26,25 +28,48 @@ declare var bootstrap: any;
 })
 export class ExtractdataComponent implements OnInit {
     extracteddata = signal<ExtractedData[]>([]);
-    private dataService = inject(DataService); 
-    constructor(private router: Router, private authService: AuthService) {} 
+    private dataService = inject(DataService);
+    constructor(private router: Router, private authService: AuthService) {}
 
     editIcon: string = 'assets/images/edit.png';
     deleteIcon: string = 'assets/images/delete.png';
+
+    userFirstName: string = 'Admin';
+    private userAuthSubscription: Subscription | undefined;
 
     editingData: ExtractedData | null = null;
     private editModal: any;
 
     ngOnInit() {
         this.getData();
+
+        this.userAuthSubscription = this.authService.currentUser.subscribe(
+            (user: UserResponse | null) => {
+                this.userFirstName = user?.name || 'Admin';
+            }
+        );
+    }
+
+    ngOnDestroy(): void {
+        this.userAuthSubscription?.unsubscribe();
     }
 
     getData() {
+        const currentUser = this.authService.getCurrentUserValue();
+        if (!currentUser) return;
+
         this.dataService.getData().subscribe({
             next: (data) => {
-                this.extracteddata.set(data);
+                if (Array.isArray(data)) {
+                    console.log('Received data:', data);
+                    this.extracteddata.set(data);
+                } else {
+                    console.error('Data is not an array:', data);
+                    this.extracteddata.set([]);
+                }
             },
-            error: (err) => console.error('Failed to fetch data', err),
+            error: (err) =>
+                console.error('Failed to fetch user-specific data', err),
         });
     }
 
@@ -57,7 +82,6 @@ export class ExtractdataComponent implements OnInit {
                 if (modalElement) {
                     this.editModal = new bootstrap.Modal(modalElement);
                     this.editModal.show();
-
                 }
             });
         } else {
@@ -84,7 +108,7 @@ export class ExtractdataComponent implements OnInit {
                 });
                 this.editingData = null;
                 this.editModal?.hide();
-                },
+            },
             error: (err) => {
                 console.error('Update failed', err);
                 alert('Update failed. Please try again.');
@@ -123,7 +147,7 @@ export class ExtractdataComponent implements OnInit {
             panelClass: 'custom-dialog-container',
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 console.log('Dialog closed with success, refreshing data...');
                 this.getData();

@@ -1,9 +1,20 @@
 <div class="table-container">
     <div class="d-flex justify-content-end align-items-center mb-3">
-        <button class="pdf-scan-btn me-2" (click)="openDialog()">
+        <div
+            class="d-flex align-items-center"
+            style="width: 100%;"
+        >
+            <h4 class="mb-0" style="color: white; height: 100%;">
+                <strong style="background-color: #2d8bf0; padding: 12px 20px; border-radius: 50%;">{{userFirstName}}</strong>
+            </h4>
+        </div>
+        <button class="pdf-scan-btn me-2 text-nowrap" (click)="openDialog()">
             <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Scan PDF File
         </button>
-        <button class="btn btn-outline-secondary" (click)="logout()">
+        <button
+            class="btn btn-outline-secondary text-nowrap"
+            (click)="logout()"
+        >
             <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
         </button>
     </div>
@@ -122,7 +133,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">
+                        Save changes
+                    </button>
                 </div>
             </div>
         </div>
