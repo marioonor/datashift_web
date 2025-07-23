@@ -1,6 +1,6 @@
 .table-container {
     padding: 2rem;
-    background-color: #f9fbfc;
+    background: radial-gradient(circle, #90d0f0 0%, #60b0e0 100%);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     
 }
@@ -84,4 +84,14 @@ button:focus {
 button i {
     margin-right: 8px;
     font-size: 1.2rem;
+}
+
+.hide-scrollbar {
+  overflow: auto;
+  scrollbar-width: none; 
+  -ms-overflow-style: none;  
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  
 }
