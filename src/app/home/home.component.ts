@@ -23,6 +23,9 @@ export class HomeComponent {
     confirmPassword = '';
     role: string = 'USER';
 
+    passwordFieldType: string = 'password';
+    confirmPasswordFieldType: string = 'password';
+
     private onRegister() {
         if (!this.name || !this.email || !this.password) {
             alert('Please fill in all fields');
@@ -69,7 +72,8 @@ export class HomeComponent {
             alert('Please provide email and password.');
             return;
         }
-        this.authService.login({ email: this.email, password: this.password })
+        this.authService
+            .login({ email: this.email, password: this.password })
             .subscribe({
                 next: (user) => {
                     console.log('Login successful', user);
@@ -102,6 +106,18 @@ export class HomeComponent {
         this.email = '';
         this.password = '';
         this.confirmPassword = '';
+    }
+
+    togglePasswordVisibility(field: 'password' | 'confirmPassword'): void {
+        if (field === 'password') {
+            this.passwordFieldType =
+                this.passwordFieldType === 'password' ? 'text' : 'password';
+        } else if (field === 'confirmPassword') {
+            this.confirmPasswordFieldType =
+                this.confirmPasswordFieldType === 'password'
+                    ? 'text'
+                    : 'password';
+        }
     }
 
     onSubmit(event: Event): void {

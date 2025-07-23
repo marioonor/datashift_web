@@ -59,27 +59,63 @@
                         <label for="password" class="form-label"
                             >Password</label
                         >
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            name="password"
-                            [(ngModel)]="password"
-                            required
-                        />
+                        <div class="input-group">
+                            <input
+                                [type]="passwordFieldType"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                [(ngModel)]="password"
+                                required
+                            />
+                            <span
+                                class="input-group-text"
+                                (click)="togglePasswordVisibility('password')"
+                                style="cursor: pointer"
+                            >
+                                <i
+                                    class="bi"
+                                    [class.bi-eye-slash]="
+                                        passwordFieldType === 'password'
+                                    "
+                                    [class.bi-eye]="
+                                        passwordFieldType === 'text'
+                                    "
+                                ></i>
+                            </span>
+                        </div>
                     </div>
                     <div class="mb-3" *ngIf="!isLogin">
                         <label for="confirmPassword" class="form-label"
                             >Confirm Password</label
                         >
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            [(ngModel)]="confirmPassword"
-                            class="form-control"
-                            required
-                        />
+                        <div class="input-group">
+                            <input
+                                [type]="confirmPasswordFieldType"
+                                class="form-control"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                [(ngModel)]="confirmPassword"
+                                required
+                            />
+                            <span
+                                class="input-group-text"
+                                (click)="
+                                    togglePasswordVisibility('confirmPassword')
+                                "
+                                style="cursor: pointer"
+                            >
+                                <i
+                                    class="bi"
+                                    [class.bi-eye-slash]="
+                                        confirmPasswordFieldType === 'password'
+                                    "
+                                    [class.bi-eye]="
+                                        confirmPasswordFieldType === 'text'
+                                    "
+                                ></i>
+                            </span>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
                         {{ isLogin ? "Login" : "Register" }}

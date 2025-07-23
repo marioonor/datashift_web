@@ -4,6 +4,7 @@ import {
     inject,
     signal,
     ChangeDetectionStrategy,
+    AfterViewInit,
 } from '@angular/core';
 import { ExtractedData } from '../model/extracteddata.model';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +27,7 @@ declare var bootstrap: any;
     styleUrl: './extractdata.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExtractdataComponent implements OnInit {
+export class ExtractdataComponent implements OnInit, AfterViewInit {
     extracteddata = signal<ExtractedData[]>([]);
     private dataService = inject(DataService);
     constructor(private router: Router, private authService: AuthService) {}
@@ -35,6 +36,7 @@ export class ExtractdataComponent implements OnInit {
     deleteIcon: string = 'assets/images/delete.png';
 
     userFirstName: string = 'Admin';
+    searchText: string = '';
     private userAuthSubscription: Subscription | undefined;
 
     editingData: ExtractedData | null = null;
@@ -52,6 +54,27 @@ export class ExtractdataComponent implements OnInit {
 
     ngOnDestroy(): void {
         this.userAuthSubscription?.unsubscribe();
+    }
+
+    ngAfterViewInit(): void {
+        const modalElement = document.getElementById('editTodoModal');
+        if (modalElement) {
+            this.editModal = new bootstrap.Modal(modalElement);
+        }
+    }
+
+    get filteredData(): ExtractedData[] {
+        const search = this.searchText.toLowerCase();
+        if (!search) {
+            return this.extracteddata();
+        }
+        return this.extracteddata().filter((data) => {
+            return (
+                data.keyword.toLowerCase().includes(search) ||
+                data.sentence.toLowerCase().includes(search) ||
+                data.page.toString().includes(search)
+            );
+        });
     }
 
     getData() {
