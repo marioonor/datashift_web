@@ -14,7 +14,7 @@
             </h4>
             <div
                 class="input-group custom-search-bar"
-                style="width: 70%; margin-left: 50px"
+                style="width: 40%; margin-left: 50px"
             >
                 <input
                     type="text"
@@ -43,7 +43,8 @@
         <table class="custom-table">
             <thead>
                 <tr>
-                    <th class="text-nowrap">Control Number</th>
+                    <th class="text-nowrap">Controls #</th>
+                    <th>File Name</th>
                     <th>Keyword</th>
                     <th>Page</th>
                     <th>Sentence</th>
@@ -54,6 +55,7 @@
                 @for (data of filteredData; track data.id) {
                 <tr>
                     <td>{{ data.id }}</td>
+                    <td>{{ data.fileName }}</td>
                     <td>{{ data.keyword }}</td>
                     <td>{{ data.page }}</td>
                     <td>{{ data.sentence }}</td>
